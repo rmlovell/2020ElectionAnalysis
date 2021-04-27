@@ -71,7 +71,7 @@ var svg4 = d3.select("#svg4");
 var path = d3.geoPath();
 
 let tweets = {}; 
-d3.csv('../Datasets/count.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/count.csv', function(d){
   for (let i = 0; i < d.length; i++){
     tweets[d[i].st] = {"D" : d[i].count_x,  "R" : d[i].count_y, "percent" : d[i].percent};
   }
@@ -79,7 +79,7 @@ d3.csv('../Datasets/count.csv', function(d){
 console.log(tweets);
 
 let pop_vote = {}; 
-d3.csv('../Datasets/pop_vote_color.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_color.csv', function(d){
   for (let i = 0; i < d.length; i++){
     pop_vote[d[i].st] = d[i].prop;
   }
@@ -87,14 +87,14 @@ d3.csv('../Datasets/pop_vote_color.csv', function(d){
 
 let vote_counts = {};
 
-d3.csv('../Datasets/pop_vote_data.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
   for (let i = 0; i < d.length; i++){
     vote_counts[d[i].st] = {"D" : d[i].dem_votes, "R" : d[i].rep_votes};
   }
 });
 
 let likes = {};
-d3.csv('../Datasets/likes.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/likes.csv', function(d){
   for (let i = 0; i < d.length; i++){
     console.log(d);
     likes[d[i].st] = {"D" : d[i].likes_x, "R" : d[i].likes_y, "percent" : d[i].percent};
@@ -102,7 +102,7 @@ d3.csv('../Datasets/likes.csv', function(d){
 });
 
 let retweets = {};
-d3.csv('../Datasets/retweet_count.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d){
   for (let i = 0; i < d.length; i++){
     console.log(d);
     retweets[d[i].st] = {"D" : d[i].retweet_count_x, "R" : d[i].retweet_count_y, "percent" : d[i].percent};
