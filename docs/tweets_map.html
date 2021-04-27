@@ -63,7 +63,7 @@
       <label for="other">Popular Vote</label>
       
       </div>
-      <div class = "tip"> Mouse over states to view state-specific data<div>
+      <div class = "tip">Mouse over states to view state-specific data</div>
     </div>
   </div>
 <script>
@@ -188,7 +188,7 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 			    .attr("transform", function(d) {
 			    	return "translate(" + arc.centroid(d) + ")";
 			    })
-          
+          .style('fill', 'white')
 			    .attr("text-anchor", "middle")
 			    .text(function(d) {
 			    	return d.value;

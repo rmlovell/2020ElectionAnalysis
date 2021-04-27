@@ -28,6 +28,10 @@
     position: absolute;
     top: 50px;
   }
+  .tip{
+    position: absolute;
+    top: 150px;
+  }
       
       </style>
       <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -57,7 +61,7 @@
     <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'">
     <label for="other">Popular Vote</label>
     </div>
-    
+    <div class = "tip">Mouse over states to view state-specific data</div>
   </div>
 </div>
 <script>
@@ -200,7 +204,7 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 			    .attr("transform", function(d) {
 			    	return "translate(" + arc.centroid(d) + ")";
 			    })
-          
+          .style('fill', 'white')
 			    .attr("text-anchor", "middle")
 			    .text(function(d) {
 			    	return d.value;
