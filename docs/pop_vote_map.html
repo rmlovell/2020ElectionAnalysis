@@ -80,7 +80,7 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
     tweets[d[i].st] = {"D" : d[i].count_x,  "R" : d[i].count_y, "percent" : d[i].percent};
   }
 });
-console.log(tweets);
+
 
 let pop_vote = {}; 
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_color.csv', function(d){
@@ -100,7 +100,6 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
 let likes = {};
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/likes.csv', function(d){
   for (let i = 0; i < d.length; i++){
-    console.log(d);
     likes[d[i].st] = {"D" : d[i].likes_x, "R" : d[i].likes_y, "percent" : d[i].percent};
   }
 });
@@ -108,7 +107,7 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
 let retweets = {};
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d){
   for (let i = 0; i < d.length; i++){
-    console.log(d);
+    
     retweets[d[i].st] = {"D" : d[i].retweet_count_x, "R" : d[i].retweet_count_y, "percent" : d[i].percent};
   }
 });
@@ -134,7 +133,7 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
     .enter()
     .append("path")
     .attr("fill", function(d){
-        console.log(pop_vote[d.id]);
+        
         return d3.interpolateRdBu(pop_vote[d.id]);
       })
     .attr("id", function(d){
