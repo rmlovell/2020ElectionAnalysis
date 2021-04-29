@@ -46,10 +46,10 @@
   <div class = "column">
     <svg width="960" height="600" id = "svg"></svg>
   <div class = "row">
-  <svg width="240" height="400" id = "svg1"></svg>
-  <svg width="240" height="400" id = "svg2"></svg>
-  <svg width="240" height="400" id = "svg3"></svg>
-  <svg width="240" height="400" id = "svg4"></svg>
+  <svg width="240" height="250" id = "svg1"></svg>
+  <svg width="240" height="250" id = "svg2"></svg>
+  <svg width="240" height="250" id = "svg3"></svg>
+  <svg width="240" height="250" id = "svg4"></svg>
   </div>
   </div>
   <div class = "column" >
@@ -67,6 +67,10 @@
     <div class = "tip">Mouse over states to view state-specific data</div>
   </div>
 </div>
+<div class = "row">
+
+  <svg width="500" height="500" id = "svg5"></svg>
+</div>
 <script>
 
 var svg = d3.select("#svg");
@@ -74,6 +78,8 @@ var svg1 = d3.select("#svg1");
 var svg2 = d3.select("#svg2");
 var svg3 = d3.select("#svg3");
 var svg4 = d3.select("#svg4");
+
+var svg5 = d3.select("#svg5");
 var path = d3.geoPath();
 
 let tweets = {}; 
@@ -240,6 +246,69 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
   
 });
 
+function makeScatterplot(){
+  var w = 500;
+			var h = 500;
+			var padding = 40;
+			var r = 5;
+			
+let dataset = [{"stusps":"AZ","prop":0.5,"percent":0.5198,"num_tweets":3334},{"stusps":"FL","prop":0.48,"percent":0.4505,"num_tweets":11789},{"stusps":"GA","prop":0.51,"percent":0.5298,"num_tweets":4672},{"stusps":"IA","prop":0.46,"percent":0.4804,"num_tweets":281},{"stusps":"MI","prop":0.52,"percent":0.4702,"num_tweets":2082},{"stusps":"MN","prop":0.54,"percent":0.5143,"num_tweets":1571},{"stusps":"NV","prop":0.51,"percent":0.4996,"num_tweets":3443},{"stusps":"NH","prop":0.54,"percent":0.56,"num_tweets":50},{"stusps":"NC","prop":0.49,"percent":0.4531,"num_tweets":2302},{"stusps":"OH","prop":0.46,"percent":0.6234,"num_tweets":4134},{"stusps":"PA","prop":0.51,"percent":0.5063,"num_tweets":6129},{"stusps":"TX","prop":0.47,"percent":0.4718,"num_tweets":14119},{"stusps":"WI","prop":0.5,"percent":0.5798,"num_tweets":990},{"stusps":"AL","prop":0.37,"percent":0.4842,"num_tweets":568},{"stusps":"AK","prop":0.45,"percent":0.5789,"num_tweets":209},{"stusps":"AR","prop":0.36,"percent":0.4925,"num_tweets":134},{"stusps":"CA","prop":0.65,"percent":0.4652,"num_tweets":34168},{"stusps":"CO","prop":0.57,"percent":0.4178,"num_tweets":2748},{"stusps":"CT","prop":0.6,"percent":0.4264,"num_tweets":333},{"stusps":"DE","prop":0.6,"percent":0.8485,"num_tweets":99},{"stusps":"DC","prop":0.95,"percent":0.4188,"num_tweets":15896},{"stusps":"HI","prop":0.65,"percent":0.3378,"num_tweets":592},{"stusps":"ID","prop":0.34,"percent":0.3397,"num_tweets":474},{"stusps":"IL","prop":0.58,"percent":0.4397,"num_tweets":7892},{"stusps":"IN","prop":0.42,"percent":0.4352,"num_tweets":1397},{"stusps":"KS","prop":0.43,"percent":0.4276,"num_tweets":304},{"stusps":"KY","prop":0.37,"percent":0.412,"num_tweets":733},{"stusps":"LA","prop":0.41,"percent":0.4416,"num_tweets":1207},{"stusps":"ME","prop":0.55,"percent":0.2857,"num_tweets":28},{"stusps":"MD","prop":0.67,"percent":0.4481,"num_tweets":1455},{"stusps":"MA","prop":0.67,"percent":0.5206,"num_tweets":4524},{"stusps":"MS","prop":0.41,"percent":0.5839,"num_tweets":161},{"stusps":"MO","prop":0.42,"percent":0.4448,"num_tweets":1902},{"stusps":"MT","prop":0.41,"percent":0.6627,"num_tweets":83},{"stusps":"NE","prop":0.4,"percent":0.5519,"num_tweets":270},{"stusps":"NJ","prop":0.58,"percent":0.5117,"num_tweets":858},{"stusps":"NM","prop":0.55,"percent":0.4989,"num_tweets":463},{"stusps":"NY","prop":0.62,"percent":0.4883,"num_tweets":36728},{"stusps":"ND","prop":0.33,"percent":0.7436,"num_tweets":39},{"stusps":"OK","prop":0.33,"percent":0.5026,"num_tweets":569},{"stusps":"OR","prop":0.58,"percent":0.3428,"num_tweets":2926},{"stusps":"RI","prop":0.6,"percent":0.4828,"num_tweets":145},{"stusps":"SC","prop":0.44,"percent":0.5035,"num_tweets":564},{"stusps":"TN","prop":0.38,"percent":0.4365,"num_tweets":2252},{"stusps":"UT","prop":0.4,"percent":0.5661,"num_tweets":590},{"stusps":"VT","prop":0.68,"percent":0.2536,"num_tweets":138},{"stusps":"VA","prop":0.55,"percent":0.4166,"num_tweets":1085},{"stusps":"WA","prop":0.6,"percent":0.4788,"num_tweets":3471},{"stusps":"WV","prop":0.3,"percent":0.6216,"num_tweets":37},{"stusps":"WY","prop":0.28,"percent":0.3393,"num_tweets":56}];
+
+			var xScale = d3.scaleLinear()
+								 .domain([0, 1])
+								 .range([padding, (w - padding)]);
+
+			var yScale = d3.scaleLinear()
+								 .domain([0, 1])
+								 .range([(h - padding), padding]);
+
+								 
+
+			//Define X axis
+			var xAxis = d3.axisBottom()
+							  .scale(xScale)
+							  .ticks(9);
+
+			//Define Y axis
+			var yAxis = d3.axisLeft()
+							  .scale(yScale)
+							  .ticks(9);
+
+			//Create circles
+			svg5.selectAll("circle")
+			   .data(dataset)
+			   .enter()
+			   .append("circle")
+			   
+			   .attr("cx", function(d) {
+			   		return xScale(d.prop);
+			   })
+			   .attr("cy", function(d) {
+			   		return yScale(d.percent);
+			   })
+			   .attr("r", function(d){
+				   return d.num_tweets/1500+5;
+				})
+				.attr("fill", "steelblue")
+				.attr("opacity", .6)
+        .append("title")
+			  	.text(function(d) {
+            return d.stusps;
+          });
+			
+			//Create X axis
+			svg5.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(0" + "," + (h-padding) + ")")
+				.call(xAxis);
+			
+			//Create Y axis
+			svg5.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + ((padding)) + "," +  "0)")
+				.call(yAxis);
+}
+makeScatterplot();
 </script>
 </body>
 </html>
