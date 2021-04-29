@@ -86,7 +86,7 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
 
 
 let pop_vote = {}; 
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/Datasets/pop_vote_data.csv', function(d){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
   console.log(d);
   for (let i = 0; i < d.length; i++){
     pop_vote[d[i].st] = {"D": [d[i].dem_votes, d[i].dem_percent], "R": [d[i].rep_votes, d[i].rep_percent], "prop" : d[i].prop};
