@@ -61,6 +61,9 @@
       <label for="female">Tweet Sentiment</label><br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" checked = "true">
       <label for="other">Popular Vote</label>
+      <br>
+      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
+      <label for="other">Error</label>
       </div>
       <div class = "tip">Mouse over states to view state-specific data</div>
     </div>
@@ -83,12 +86,14 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
 
 
 let pop_vote = {}; 
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_color.csv', function(d){
+d3.csv('../Datasets/pop_vote_data.csv', function(d){
+  console.log(d);
   for (let i = 0; i < d.length; i++){
-    pop_vote[d[i].st] = d[i].prop;
+    pop_vote[d[i].st] = {"D": [d[i].dem_votes, d[i].dem_percent], "R": [d[i].rep_votes, d[i].rep_percent], "prop" : d[i].prop};
   }
 });
 
+console.log(pop_vote)
 let vote_counts = {};
 
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
@@ -134,7 +139,7 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
     .append("path")
     .attr("fill", function(d){
         
-        return d3.interpolateRdBu(pop_vote[d.id]);
+        return d3.interpolateRdBu(pop_vote[d.id]["prop"]);
       })
     .attr("id", function(d){
       return d.id;
@@ -142,7 +147,8 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
     .attr("d", path)
     .append("title")
 			  	.text(function(d) {
-			   			return "D: " + vote_counts[d.id]["D"].toString() + " R: " + vote_counts[d.id]["R"].toString();
+            
+			   			return "D: " + pop_vote[d.id]["D"][0].toString() + " votes, " + Math.round(pop_vote[d.id]["D"][1]*100).toString() + "% R: " + pop_vote[d.id]["R"][0].toString() + " votes, " + Math.round(pop_vote[d.id]["R"][1]*100).toString() + "%";
 			   		});
              svg.append("path")
       .attr("class", "state-borders")
@@ -204,7 +210,9 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
       
     d3.selectAll("path")
 			.on("mouseover", function () {
+        
       let id = this.id;
+      
       makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote");
       makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party");
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party");
