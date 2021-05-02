@@ -77,12 +77,12 @@
       <br>
       <div class = "row">
       <div class = "buttons">
-        <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'" checked = "true">
+        <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
       <label for="male">Tweets</label><br>
-      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'">
+      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  checked = "true">
       <label for="male">Retweets</label><br>
       
-      <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'" >
+      <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
       <label for="male">Likes</label><br>
       <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
       <label for="female">Tweet Sentiment</label><br>
@@ -95,8 +95,8 @@
       
     </div>
     <br>
-      <div class = "row sp-title">Tweets versus votes</div>
-      <div class  = "row">Axes represent fraction of Biden tweets or votes, or one minus the fraction of Trump tweets or votes. Point size represents number of tweets</div>      
+      <div class = "row sp-title">Retweets versus votes</div>
+      <div class  = "row">Axes represent fraction of Biden retweets or votes, or one minus the fraction of Trump retweets or votes. Point size represents number of tweets</div>      
       <div class = "row">
         <svg class = "scatterplot" width="500" height="500" id = "svg5"></svg>
       </div>
@@ -129,13 +129,13 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
 
 let pop_vote = {}; 
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
-  console.log(d);
+  
   for (let i = 0; i < d.length; i++){
-    pop_vote[d[i].st] = {"D": [d[i].dem_votes, d[i].dem_percent], "R": [d[i].rep_votes, d[i].rep_percent], "prop" : d[i].prop};
+    pop_vote[d[i].st] = {"D": [d[i].dem_votes, d[i].dem_percent], "R": [d[i].rep_votes, d[i].dem_percent], "prop" : d[i].prop};
   }
 });
 
-console.log(pop_vote);
+
 let vote_counts = {};
 
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
@@ -165,13 +165,13 @@ let fips_state = [{"st":"04","stusps":"AZ"},{"st":"12","stusps":"FL"},{"st":"13"
 for (let i = 0; i < fips_state.length; i ++){
   state_fips[fips_state[i]["stusps"]] = fips_state[i]["st"];
 }
-fips_state = {};
+let fips_state2 = {};
 
 for (key in state_fips){
-  fips_state[state_fips[key]] = key;
+  fips_state2[state_fips[key]] = key;
 }
-//scatterplot dataset
-let dataset = [{"stusps":"AZ","prop":0.5,"percent":0.5198,"num_tweets":3334},{"stusps":"SD","prop":0.37, "percent" : 1, "num_tweets": 10},{"stusps":"FL","prop":0.48,"percent":0.4505,"num_tweets":11789},{"stusps":"GA","prop":0.51,"percent":0.5298,"num_tweets":4672},{"stusps":"IA","prop":0.46,"percent":0.4804,"num_tweets":281},{"stusps":"MI","prop":0.52,"percent":0.4702,"num_tweets":2082},{"stusps":"MN","prop":0.54,"percent":0.5143,"num_tweets":1571},{"stusps":"NV","prop":0.51,"percent":0.4996,"num_tweets":3443},{"stusps":"NH","prop":0.54,"percent":0.56,"num_tweets":50},{"stusps":"NC","prop":0.49,"percent":0.4531,"num_tweets":2302},{"stusps":"OH","prop":0.46,"percent":0.6234,"num_tweets":4134},{"stusps":"PA","prop":0.51,"percent":0.5063,"num_tweets":6129},{"stusps":"TX","prop":0.47,"percent":0.4718,"num_tweets":14119},{"stusps":"WI","prop":0.5,"percent":0.5798,"num_tweets":990},{"stusps":"AL","prop":0.37,"percent":0.4842,"num_tweets":568},{"stusps":"AK","prop":0.45,"percent":0.5789,"num_tweets":209},{"stusps":"AR","prop":0.36,"percent":0.4925,"num_tweets":134},{"stusps":"CA","prop":0.65,"percent":0.4652,"num_tweets":34168},{"stusps":"CO","prop":0.57,"percent":0.4178,"num_tweets":2748},{"stusps":"CT","prop":0.6,"percent":0.4264,"num_tweets":333},{"stusps":"DE","prop":0.6,"percent":0.8485,"num_tweets":99},{"stusps":"DC","prop":0.95,"percent":0.4188,"num_tweets":15896},{"stusps":"HI","prop":0.65,"percent":0.3378,"num_tweets":592},{"stusps":"ID","prop":0.34,"percent":0.3397,"num_tweets":474},{"stusps":"IL","prop":0.58,"percent":0.4397,"num_tweets":7892},{"stusps":"IN","prop":0.42,"percent":0.4352,"num_tweets":1397},{"stusps":"KS","prop":0.43,"percent":0.4276,"num_tweets":304},{"stusps":"KY","prop":0.37,"percent":0.412,"num_tweets":733},{"stusps":"LA","prop":0.41,"percent":0.4416,"num_tweets":1207},{"stusps":"ME","prop":0.55,"percent":0.2857,"num_tweets":28},{"stusps":"MD","prop":0.67,"percent":0.4481,"num_tweets":1455},{"stusps":"MA","prop":0.67,"percent":0.5206,"num_tweets":4524},{"stusps":"MS","prop":0.41,"percent":0.5839,"num_tweets":161},{"stusps":"MO","prop":0.42,"percent":0.4448,"num_tweets":1902},{"stusps":"MT","prop":0.41,"percent":0.6627,"num_tweets":83},{"stusps":"NE","prop":0.4,"percent":0.5519,"num_tweets":270},{"stusps":"NJ","prop":0.58,"percent":0.5117,"num_tweets":858},{"stusps":"NM","prop":0.55,"percent":0.4989,"num_tweets":463},{"stusps":"NY","prop":0.62,"percent":0.4883,"num_tweets":36728},{"stusps":"ND","prop":0.33,"percent":0.7436,"num_tweets":39},{"stusps":"OK","prop":0.33,"percent":0.5026,"num_tweets":569},{"stusps":"OR","prop":0.58,"percent":0.3428,"num_tweets":2926},{"stusps":"RI","prop":0.6,"percent":0.4828,"num_tweets":145},{"stusps":"SC","prop":0.44,"percent":0.5035,"num_tweets":564},{"stusps":"TN","prop":0.38,"percent":0.4365,"num_tweets":2252},{"stusps":"UT","prop":0.4,"percent":0.5661,"num_tweets":590},{"stusps":"VT","prop":0.68,"percent":0.2536,"num_tweets":138},{"stusps":"VA","prop":0.55,"percent":0.4166,"num_tweets":1085},{"stusps":"WA","prop":0.6,"percent":0.4788,"num_tweets":3471},{"stusps":"WV","prop":0.3,"percent":0.6216,"num_tweets":37},{"stusps":"WY","prop":0.28,"percent":0.3393,"num_tweets":56}];
+// //scatterplot dataset
+// let dataset = [{"stusps":"AZ","prop":0.5,"percent":0.5198,"num_tweets":3334},{"stusps":"SD","prop":0.37, "percent" : 1, "num_tweets": 10},{"stusps":"FL","prop":0.48,"percent":0.4505,"num_tweets":11789},{"stusps":"GA","prop":0.51,"percent":0.5298,"num_tweets":4672},{"stusps":"IA","prop":0.46,"percent":0.4804,"num_tweets":281},{"stusps":"MI","prop":0.52,"percent":0.4702,"num_tweets":2082},{"stusps":"MN","prop":0.54,"percent":0.5143,"num_tweets":1571},{"stusps":"NV","prop":0.51,"percent":0.4996,"num_tweets":3443},{"stusps":"NH","prop":0.54,"percent":0.56,"num_tweets":50},{"stusps":"NC","prop":0.49,"percent":0.4531,"num_tweets":2302},{"stusps":"OH","prop":0.46,"percent":0.6234,"num_tweets":4134},{"stusps":"PA","prop":0.51,"percent":0.5063,"num_tweets":6129},{"stusps":"TX","prop":0.47,"percent":0.4718,"num_tweets":14119},{"stusps":"WI","prop":0.5,"percent":0.5798,"num_tweets":990},{"stusps":"AL","prop":0.37,"percent":0.4842,"num_tweets":568},{"stusps":"AK","prop":0.45,"percent":0.5789,"num_tweets":209},{"stusps":"AR","prop":0.36,"percent":0.4925,"num_tweets":134},{"stusps":"CA","prop":0.65,"percent":0.4652,"num_tweets":34168},{"stusps":"CO","prop":0.57,"percent":0.4178,"num_tweets":2748},{"stusps":"CT","prop":0.6,"percent":0.4264,"num_tweets":333},{"stusps":"DE","prop":0.6,"percent":0.8485,"num_tweets":99},{"stusps":"DC","prop":0.95,"percent":0.4188,"num_tweets":15896},{"stusps":"HI","prop":0.65,"percent":0.3378,"num_tweets":592},{"stusps":"ID","prop":0.34,"percent":0.3397,"num_tweets":474},{"stusps":"IL","prop":0.58,"percent":0.4397,"num_tweets":7892},{"stusps":"IN","prop":0.42,"percent":0.4352,"num_tweets":1397},{"stusps":"KS","prop":0.43,"percent":0.4276,"num_tweets":304},{"stusps":"KY","prop":0.37,"percent":0.412,"num_tweets":733},{"stusps":"LA","prop":0.41,"percent":0.4416,"num_tweets":1207},{"stusps":"ME","prop":0.55,"percent":0.2857,"num_tweets":28},{"stusps":"MD","prop":0.67,"percent":0.4481,"num_tweets":1455},{"stusps":"MA","prop":0.67,"percent":0.5206,"num_tweets":4524},{"stusps":"MS","prop":0.41,"percent":0.5839,"num_tweets":161},{"stusps":"MO","prop":0.42,"percent":0.4448,"num_tweets":1902},{"stusps":"MT","prop":0.41,"percent":0.6627,"num_tweets":83},{"stusps":"NE","prop":0.4,"percent":0.5519,"num_tweets":270},{"stusps":"NJ","prop":0.58,"percent":0.5117,"num_tweets":858},{"stusps":"NM","prop":0.55,"percent":0.4989,"num_tweets":463},{"stusps":"NY","prop":0.62,"percent":0.4883,"num_tweets":36728},{"stusps":"ND","prop":0.33,"percent":0.7436,"num_tweets":39},{"stusps":"OK","prop":0.33,"percent":0.5026,"num_tweets":569},{"stusps":"OR","prop":0.58,"percent":0.3428,"num_tweets":2926},{"stusps":"RI","prop":0.6,"percent":0.4828,"num_tweets":145},{"stusps":"SC","prop":0.44,"percent":0.5035,"num_tweets":564},{"stusps":"TN","prop":0.38,"percent":0.4365,"num_tweets":2252},{"stusps":"UT","prop":0.4,"percent":0.5661,"num_tweets":590},{"stusps":"VT","prop":0.68,"percent":0.2536,"num_tweets":138},{"stusps":"VA","prop":0.55,"percent":0.4166,"num_tweets":1085},{"stusps":"WA","prop":0.6,"percent":0.4788,"num_tweets":3471},{"stusps":"WV","prop":0.3,"percent":0.6216,"num_tweets":37},{"stusps":"WY","prop":0.28,"percent":0.3393,"num_tweets":56}];
 
 let w = 960;
 
@@ -255,10 +255,10 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
     .append("path")
     .attr("class", "state")
     .attr("fill", function(d){
-        return d3.interpolateRdBu(tweets[d.id].percent);
+        return d3.interpolateRdBu(retweets[d.id].percent);
       })
     .attr("id", function(d){
-      console.log(d.id);
+      
       return d.id;
     })
     .attr("d", path)
@@ -300,6 +300,16 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 });
 
 function makeScatterplot(){
+   
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d2){
+    
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
+    
+    let dataset = [];
+    for (let i = 0; i < d.length; i++){
+    dataset.push({"state": d2[i].st, "retweet_percent" : Number(d2[i].percent), "retweet_count" : Number(d2[i].retweet_count_x) + Number(d2[i].retweet_count_y) , "vote" : Number(d[i].prop)}); 
+    }
+console.log(dataset);
   var w = 500;
 			var h = 500;
 			var padding = 40;
@@ -334,36 +344,37 @@ function makeScatterplot(){
 			   
 			   .attr("cx", function(d) {
            console.log(d);
-			   		return xScale(d.prop);
+			   		return xScale(d.vote);
 			   })
 			   .attr("cy", function(d) {
-			   		return yScale(d.percent);
+			   		return yScale(d.retweet_percent);
 			   })
 			   .attr("r", function(d){
-				   return d.num_tweets/1250+4;
+				   return d.retweet_count/10000 + 5;
 				})
 				.attr("fill", "steelblue")
 				.attr("opacity", .6)
         .attr("id", function(d){
-          return "scatter" + state_fips[d.stusps].toString();})
+          return "scatter" + d.state.toString();})
         .on("mouseover", function(d){
-          d3.select(`#${CSS.escape(state_fips[d.stusps].toString())}`)
+          d3.select(`#${CSS.escape(d.state.toString())}`)
           .classed("hover", true);
-          d3.select("#scatter"+state_fips[d.stusps].toString())
+        d3.select("#scatter"+d.state.toString())
           
       .style("stroke", "orange")
       .style("fill", "yellow");
       var id = this.id.substring(7,9);
       console.log(id);
+     
       makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote", 200, 200, true);
       makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200, true);
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200, true);
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200, true);
         })
         .on("mouseout", function(d){
-          d3.select(`#${CSS.escape(state_fips[d.stusps].toString())}`)
+          d3.select(`#${CSS.escape(d.state.toString())}`)
           .classed("hover", false);
-          d3.select("#scatter"+state_fips[d.stusps].toString())
+          d3.select("#scatter"+d.state.toString())
         
       .style("stroke", "steelblue")
       .style("fill", "steelblue");
@@ -403,9 +414,11 @@ function makeScatterplot(){
     .attr("transform", "rotate(-90)")
     .style("font-weight", "bold")
     .text("Tweets");
+});
+});
 }
 makeScatterplot();
-makePie(svg6, [85005, 95231], "Total tweets per candidate", 450, 450, false);
+makePie(svg6, [379782, 307980], "Total retweets per candidate", 450, 450, false);
 </script>
 </body>
 </html>

@@ -55,20 +55,29 @@
     </div>
     </div>
     <div class = "column" >
+      <div class = "row">Mouse over states to view state-specific data
+      </div>
+      <br>
+      <div class = "row">
       <div class = "buttons">
-        <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'" >
+        <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
       <label for="male">Tweets</label><br>
+      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
+      <label for="male">Retweets</label><br>
+      
+      <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
+      <label for="male">Likes</label><br>
       <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
       <label for="female">Tweet Sentiment</label><br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'">
+      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" >
       <label for="other">Popular Vote</label>
       <br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" checked = "true">
       <label for="other">Error</label>
-
       </div>
-      <div class = "tip">Mouse over states to view state-specific data</div>
+      
     </div>
+  </div>
     
   </div>
   <div class = "row">

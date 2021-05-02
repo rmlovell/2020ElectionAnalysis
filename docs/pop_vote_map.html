@@ -53,24 +53,36 @@
     <svg width="240" height="250" id = "svg4"></svg>
     </div>
     </div>
+    
     <div class = "column" >
+      <div class = "row">Mouse over states to view state-specific data
+      </div>
+  
+      <div class = "row">
       <div class = "buttons">
         <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
       <label for="male">Tweets</label><br>
+      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
+      <label for="male">Retweets</label><br>
+      
+      <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
+      <label for="male">Likes</label><br>
       <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
       <label for="female">Tweet Sentiment</label><br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" checked = "true">
+      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" checked = "true" >
       <label for="other">Popular Vote</label>
       <br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
       <label for="other">Error</label>
       </div>
-      <div class = "tip">Mouse over states to view state-specific data</div>
+      
     </div>
+  </div>
   </div>
   <div class = "row">
 
     <svg width="500" height="500" id = "svg5"></svg>
+    <svg width="500" height="500" id = "svg6"></svg>
   </div>
 <script>
 
@@ -81,9 +93,15 @@ var svg3 = d3.select("#svg3");
 var svg4 = d3.select("#svg4");
 
 var svg5 = d3.select("#svg5");
+
+var svg5 = d3.select("#svg6");
 var path = d3.geoPath();
 
 let tweets = {}; 
+
+
+let fips_state = [{"st":"04","stusps":"AZ"},{"st":"12","stusps":"FL"},{"st":"13","stusps":"GA"},{"st":"19","stusps":"IA"},{"st":"26","stusps":"MI"},{"st":"27","stusps":"MN"},{"st":"32","stusps":"NV"},{"st":"33","stusps":"NH"},{"st":"37","stusps":"NC"},{"st":"39","stusps":"OH"},{"st":"42","stusps":"PA"},{"st":"48","stusps":"TX"},{"st":"55","stusps":"WI"},{"st":"01","stusps":"AL"},{"st":"02","stusps":"AK"},{"st":"05","stusps":"AR"},{"st":"06","stusps":"CA"},{"st":"08","stusps":"CO"},{"st":"09","stusps":"CT"},{"st":"10","stusps":"DE"},{"st":"11","stusps":"DC"},{"st":"15","stusps":"HI"},{"st":"16","stusps":"ID"},{"st":"17","stusps":"IL"},{"st":"18","stusps":"IN"},{"st":"20","stusps":"KS"},{"st":"21","stusps":"KY"},{"st":"22","stusps":"LA"},{"st":"23","stusps":"ME"},{"st":"24","stusps":"MD"},{"st":"25","stusps":"MA"},{"st":"28","stusps":"MS"},{"st":"29","stusps":"MO"},{"st":"30","stusps":"MT"},{"st":"31","stusps":"NE"},{"st":"34","stusps":"NJ"},{"st":"35","stusps":"NM"},{"st":"36","stusps":"NY"},{"st":"38","stusps":"ND"},{"st":"40","stusps":"OK"},{"st":"41","stusps":"OR"},{"st":"44","stusps":"RI"},{"st":"45","stusps":"SC"},{"st":"46","stusps":"SD"},{"st":"47","stusps":"TN"},{"st":"49","stusps":"UT"},{"st":"50","stusps":"VT"},{"st":"51","stusps":"VA"},{"st":"53","stusps":"WA"},{"st":"54","stusps":"WV"},{"st":"56","stusps":"WY"}];
+
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/count.csv', function(d){
   for (let i = 0; i < d.length; i++){
     tweets[d[i].st] = {"D" : d[i].count_x,  "R" : d[i].count_y, "percent" : d[i].percent};
@@ -161,10 +179,9 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
       .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
     
       
-      function makePie(svg, dataset, title){
+      function makePie(svg, dataset, title, w, h){
         //Width and height
-			var w = 200;
-			var h = 200;
+			
 
 			var outerRadius = w / 2;
 			var innerRadius = 0;
@@ -219,10 +236,10 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
         
       let id = this.id;
       
-      makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote");
-      makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party");
-      makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party");
-      makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party");
+      makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote", 200, 200);
+      makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200);
+      makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200);
+      makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200);
       })
       .on("mouseout", function(){
         d3.selectAll("g.arc").remove();
