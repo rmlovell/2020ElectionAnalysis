@@ -283,8 +283,8 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
         
       let id = this.id;
       
-      makePie(svg1, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200, true);
-      makePie(svg2, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote", 200, 200, true);
+      makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200, true);
+      makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote", 200, 200, true);
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200, true);
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200, true);
       d3.select("#scatter"+id.toString())
