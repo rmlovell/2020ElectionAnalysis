@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
 		<meta charset="utf-8">
-		<title>Difference between tweets and votes</title>
+		<title>Difference between retweets and votes</title>
     <style>
 
       .states :hover {
@@ -61,21 +61,21 @@
       <div class = "row">
       <div class = "buttons">
         <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
-      <label for="male">Tweets</label><br>
+      <label for="tweets">Tweets</label><br>
       <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
-      <label for="male">Retweets</label><br>
+      <label for="retweets">Retweets</label><br>
       
       <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
-      <label for="male">Likes</label><br>
+      <label for="likes">Likes</label><br>
       <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
-      <label for="female">Tweet Sentiment</label><br>
+      <label for="sentiment">Tweet Sentiment</label><br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" >
-      <label for="other">Popular Vote</label>
+      <label for="pop_vote">Popular Vote</label>
       <br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" checked = "true">
-      <label for="other">Tweet-vote Difference</label>
-<input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
-      <label for="other">Retweet-vote Difference</label>
+      <input type="radio" id="error" name="map" value="error" onclick="location.href='error_map.html'" >
+      <label for="error">Tweet-vote Difference</label>
+      <input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" checked = "true">
+      <label for="retweet_difference">Retweet-vote Difference</label>
 <input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
       <label for="other">Like-vote Difference</label>
       </div>
@@ -121,13 +121,6 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
   }
 });
 
-let retweets = {};
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d){
-  for (let i = 0; i < d.length; i++){
-    retweets[d[i].st] = {"D" : d[i].retweet_count_x, "R" : d[i].retweet_count_y, "percent" : d[i].percent};
-  }
-});
-
 
 let w = 960;
 
@@ -140,10 +133,10 @@ svg.append("text")
         .text("Difference between tweets and votes");
         
 
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/count.csv', function(d1){
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d1){
     d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d2){
       let error = {};
-let tweets = {}; 
+let retweets = {}; 
 let pop_vote = {}; 
 
   for (let i = 0; i < d2.length; i++){
@@ -151,13 +144,13 @@ let pop_vote = {};
   }
 
   for (let i = 0; i < d1.length; i++){
-    tweets[d1[i].st] = {"D" : d1[i].count_x,  "R" : d1[i].count_y, "percent" : d1[i].percent};
+    retweets[d1[i].st] = {"D" : d1[i].retweet_count_x,  "R" : d1[i].retweet_count_y, "percent" : d1[i].percent};
     
   }
 for (key in pop_vote){
-    console.log(key + " tweet: " + (tweets[key]["percent"]-.5)*2);
+    console.log(key + " tweet: " + (retweets[key]["percent"]-.5)*2);
     console.log(key + " vote: " + (pop_vote[key]["D"][1] - pop_vote[key]["R"][1]));
-    error[key] = {"data": (((tweets[key]["percent"]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])), "color" : (((tweets[key]["percent"]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])+2)/4};
+    error[key] = {"data": (((retweets[key]["percent"]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])), "color" : (((retweets[key]["percent"]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])+2)/4};
 }
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
 		<meta charset="utf-8">
-		<title>2020 US Election Tweets</title>
+		<title>2020 US Election Tweets Sentiment</title>
     <style>
 
 .states :hover {
@@ -89,7 +89,11 @@
       <label for="other">Popular Vote</label>
       <br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
-      <label for="other">Error</label>
+      <label for="other">Tweet-vote Difference</label>
+<input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
+      <label for="other">Retweet-vote Difference</label>
+<input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
+      <label for="other">Like-vote Difference</label>
       </div>
       
     </div>
@@ -205,7 +209,7 @@ svg.append("text")
         .attr("text-anchor", "middle")  
         .style("font-size", "24px") 
         .style("text-decoration", "underline")  
-        .text("2020 US Election Tweets");
+        .text("2020 US Election Tweet Sentiment");
 
         function makePie(svg, dataset, title, w, h, isMouseover){
         //Width and height

@@ -90,7 +90,11 @@
       <label for="other">Popular Vote</label>
       <br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
-      <label for="other">Error</label>
+      <label for="other">Tweet-vote Difference</label>
+<input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
+      <label for="other">Retweet-vote Difference</label>
+<input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
+      <label for="other">Like-vote Difference</label>
       </div>
       
     </div>
@@ -120,12 +124,6 @@ var svg5 = d3.select("#svg5");
 var svg6 = d3.select("#svg6");
 var path = d3.geoPath();
 
-let tweets = {}; 
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/count.csv', function(d){
-  for (let i = 0; i < d.length; i++){
-    tweets[d[i].st] = {"D" : d[i].count_x,  "R" : d[i].count_y, "percent" : d[i].percent};
-  }
-});
 
 let pop_vote = {}; 
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/pop_vote_data.csv', function(d){
@@ -242,6 +240,13 @@ svg.append("text")
           text.attr("class", "text");
         }
       }
+      
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/count.csv', function(d){
+  let tweets = {}; 
+  for (let i = 0; i < d.length; i++){
+    tweets[d[i].st] = {"D" : d[i].count_x,  "R" : d[i].count_y, "percent" : d[i].percent};
+  }
+
 
 d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
   if (error) throw error;
@@ -406,6 +411,7 @@ function makeScatterplot(){
 }
 makeScatterplot();
 makePie(svg6, [85005, 95231], "Total tweets per candidate", 450, 450, false);
+});
 </script>
 </body>
 </html>

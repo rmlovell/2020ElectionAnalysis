@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
 		<meta charset="utf-8">
-		<title>2020 US Election Tweets</title>
+		<title>2020 US Election Tweet Likes: #biden and #trump</title>
     <style>
 
       .states :hover {
@@ -91,13 +91,17 @@
       <label for="other">Popular Vote</label>
       <br>
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
-      <label for="other">Error</label>
+      <label for="other">Tweet-vote Difference</label>
+<input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
+      <label for="other">Retweet-vote Difference</label>
+<input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
+      <label for="other">Like-vote Difference</label>
       </div>
       
     </div>
     <br>
       <div class = "row sp-title">Likes versus votes</div>
-      <div class  = "row">Axes represent fraction of Biden likes or votes, or one minus the fraction of Trump likes or votes. Point size represents number of tweets</div>      
+      <div class  = "row">Axes represent fraction of Biden likes or votes, or one minus the fraction of Trump likes or votes. Point size represents number of </div>      
       <div class = "row">
         <svg class = "scatterplot" width="500" height="500" id = "svg5"></svg>
       </div>
@@ -145,14 +149,6 @@ d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Dat
   }
 });
 
-let likes = {};
-d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/likes.csv', function(d){
-  for (let i = 0; i < d.length; i++){
-   
-    likes[d[i].st] = {"D" : d[i].likes_x, "R" : d[i].likes_y, "percent" : d[i].percent};
-  }
-});
-
 let retweets = {};
 d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/retweet_count.csv', function(d){
   for (let i = 0; i < d.length; i++){
@@ -182,7 +178,7 @@ svg.append("text")
         .attr("text-anchor", "middle")  
         .style("font-size", "24px") 
         .style("text-decoration", "underline")  
-        .text("2020 US Election Tweets");
+        .text("2020 US Election Tweet Likes");
 
         function makePie(svg, dataset, title, w, h, isMouseover){
         //Width and height
@@ -243,6 +239,14 @@ svg.append("text")
           text.attr("class", "text");
         }
       }
+      
+d3.csv('https://raw.githubusercontent.com/rmlovell/2020ElectionAnalysis/main/Datasets/likes.csv', function(d){
+    let likes = {};
+    for (let i = 0; i < d.length; i++){
+   
+    likes[d[i].st] = {"D" : d[i].likes_x, "R" : d[i].likes_y, "percent" : d[i].percent};
+  }
+
 
 d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
   if (error) throw error;
@@ -265,7 +269,7 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
     .attr("d", path)
     .append("title")
 			  	.text(function(d) {
-			   			return fips_state[d.id] + ": #biden: " + tweets[d.id]["D"].toString() + ", " + Math.round(tweets[d.id]["percent"]*100, 2).toString() + "% #trump: " + tweets[d.id]["R"].toString() + ", " + Math.round((1-tweets[d.id]["percent"])*100, 2).toString() + "% total: " +  (Number(tweets[d.id]["D"]) + Number(tweets[d.id]["R"]));
+			   			return fips_state2[d.id] + ": #biden: " + likes[d.id]["D"].toString() + ", " + Math.round(likes[d.id]["percent"]*100, 2).toString() + "% #trump: " + likes[d.id]["R"].toString() + ", " + Math.round((1-likes[d.id]["percent"])*100, 2).toString() + "% total: " +  (Number(likes[d.id]["D"]) + Number(likes[d.id]["R"]));
 			   		});
              svg.append("path")
       .attr("class", "state-borders")
@@ -384,7 +388,7 @@ console.log(dataset);
         })
         .append("title")
 			  	.text(function(d) {
-            return d.stusps + ": Number of tweets: " + d.num_tweets;
+            return fips_state2[d.state] + ": " + d.likes_count + " likes";
           });
 			
 			//Create X axis
@@ -414,11 +418,12 @@ console.log(dataset);
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
     .style("font-weight", "bold")
-    .text("Tweets");
+    .text("Likes");
 });
 });
 }
 makeScatterplot();
+});
 makePie(svg6, [1793345, 1275981], "Total likes per candidate", 450, 450, false);
 </script>
 </body>
