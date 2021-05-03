@@ -47,6 +47,7 @@
   <div class="row">
     <div class = "column">
       <svg width="960" height="600" id = "svg"></svg>
+     
     <div class = "row">
     <svg width="240" height="250" id = "svg1"></svg>
     <svg width="240" height="250" id = "svg2"></svg>
@@ -54,28 +55,27 @@
     <svg width="240" height="250" id = "svg4"></svg>
     </div>
     </div>
-    
     <div class = "column" >
       <div class = "row">Mouse over states to view state-specific data
       </div>
-  
+      <br>
       <div class = "row">
       <div class = "buttons">
         <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
       <label for="male">Tweets</label><br>
-      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
+      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'" >
       <label for="male">Retweets</label><br>
       
       <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
       <label for="male">Likes</label><br>
       <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
       <label for="female">Tweet Sentiment</label><br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" checked = "true" >
+      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'"  checked = "true">
       <label for="other">Popular Vote</label><br>
       
       <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
       <label for="other">Tweet-vote Difference</label><br>
-<input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
+      <input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
       <label for="other">Retweet-vote Difference</label><br>
 <input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
       <label for="other">Like-vote Difference</label><br>
@@ -84,12 +84,17 @@
       </div>
       
     </div>
-  </div>
-  </div>
-  <div class = "row">
-
-    <svg width="500" height="500" id = "svg5"></svg>
-    <svg width="500" height="500" id = "svg6"></svg>
+    <br>
+       <div class = "row">
+        <svg class = "scatterplot" width="500" height="500" id = "svg5"></svg>
+      </div>
+      <br>
+      <div class = "row">
+        <svg class = "static_pie" width="500" height="500" id = "svg6"></svg>
+      </div>
+      
+    </div>
+    
   </div>
 <script>
 
@@ -101,7 +106,7 @@ var svg4 = d3.select("#svg4");
 
 var svg5 = d3.select("#svg5");
 
-var svg5 = d3.select("#svg6");
+var svg6 = d3.select("#svg6");
 var path = d3.geoPath();
 
 let tweets = {}; 
@@ -248,7 +253,11 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
       makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200);
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200);
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200);
-      })
+      svg6.append("circle").attr("cx",10).attr("cy",230).attr("r", 6).attr("class", "text").style("fill", "red")
+    svg6.append("circle").attr("cx",10).attr("cy",260).attr("r", 6).attr("class", "text").style("fill", "blue")
+    svg6.append("text").attr("x", 30).attr("y", 230).text("Trump").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+    svg6.append("text").attr("x", 30).attr("y", 260).text("Biden").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+     })
       .on("mouseout", function(){
         d3.selectAll("g.arc").remove();
         d3.selectAll(".text").remove();
@@ -408,13 +417,15 @@ function ramp(color, n = 256) {
 }
 legend({
   color: d3.scaleDivergingSqrt([-1  , 0, 1], d3.interpolateRdBu),
-  title: "#Biden tweets vs votes",
+  title: "Trump majority <-----------------------------------------------------> Biden majority",
   tickFormat: "+%",
   height: 700,
   width: 350,
   marginTop: 660,
   marginLeft: 7,
   })
+
+
 </script>
 </body>
 </html>

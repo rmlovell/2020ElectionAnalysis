@@ -309,6 +309,11 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
       makePie(svg2, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote", 200, 200, true);
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200, true);
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200, true);
+      svg6.append("circle").attr("cx",10).attr("cy",7).attr("class", "text").attr("r", 6).style("fill", "red")
+svg6.append("circle").attr("cx",10).attr("cy",37).attr("r", 6).attr("class", "text").style("fill", "blue")
+svg6.append("text").attr("x", 30).attr("y", 7).text("Trump").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+svg6.append("text").attr("x", 30).attr("y", 37).text("Biden").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")    
+  
       d3.select("#scatter"+id.toString())
       .style("stroke", "yellow")
       .style("fill", "yellow");
@@ -389,6 +394,10 @@ let data = [];
       makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party", 200, 200, true);
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party", 200, 200, true);
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party", 200, 200, true);
+      svg6.append("circle").attr("cx",10).attr("cy",7).attr("class", "text").attr("r", 6).style("fill", "red")
+svg6.append("circle").attr("cx",10).attr("cy",37).attr("r", 6).attr("class", "text").style("fill", "blue")
+svg6.append("text").attr("x", 30).attr("y", 7).text("Trump").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+svg6.append("text").attr("x", 30).attr("y", 37).text("Biden").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")    
         })
         .on("mouseout", function(d){
           d3.select(`#${CSS.escape(d.state.toString())}`)
@@ -588,13 +597,19 @@ function ramp(color, n = 256) {
 }
 legend({
   color: d3.scaleDivergingSqrt([-1  , 0, 1], d3.interpolateRdBu),
-  title: "#Biden tweets vs votes",
+  title: "Majority in favor of Trump <-------------------------> Majority in favor of Biden",
   tickFormat: "+%",
   height: 700,
   width: 350,
   marginTop: 660,
   marginLeft: 7,
   })
+
+  
+ 
+
+
+
 </script>
 </body>
 </html>

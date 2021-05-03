@@ -578,13 +578,18 @@ function ramp(color, n = 256) {
 }
 legend({
   color: d3.scaleDivergingSqrt([-1  , 0, 1], d3.interpolateRdBu),
-  title: "#Biden tweets vs votes",
+  title: "#Trump majority <-----------------------------------------------------> #Biden majority",
   tickFormat: "+%",
   height: 700,
   width: 350,
   marginTop: 660,
   marginLeft: 7,
   })
+svg6.append("circle").attr("cx",10).attr("cy",7).attr("r", 6).style("fill", "red")
+svg6.append("circle").attr("cx",10).attr("cy",37).attr("r", 6).style("fill", "blue")
+svg6.append("text").attr("x", 30).attr("y", 7).text("Trump").style("font-size", "15px").attr("alignment-baseline","middle")
+svg6.append("text").attr("x", 30).attr("y", 37).text("Biden").style("font-size", "15px").attr("alignment-baseline","middle")
+
 </script>
 </body>
 </html>

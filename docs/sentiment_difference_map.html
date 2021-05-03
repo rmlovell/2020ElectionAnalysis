@@ -44,52 +44,58 @@
     </head>
 
 <body>
-  <div class="row">
-    <div class = "column">
-      <svg width="960" height="600" id = "svg"></svg>
-    <div class = "row">
-    <svg width="240" height="250" id = "svg1"></svg>
-    <svg width="240" height="250" id = "svg2"></svg>
-    <svg width="240" height="250" id = "svg3"></svg>
-    <svg width="240" height="250" id = "svg4"></svg>
-    
-    </div>
-    </div>
-    <div class = "column" >
-      <div class = "row">Mouse over states to view state-specific data
+    <div class="row">
+        <div class = "column">
+          <svg width="960" height="600" id = "svg"></svg>
+         
+        <div class = "row">
+        <svg width="240" height="250" id = "svg1"></svg>
+        <svg width="240" height="250" id = "svg2"></svg>
+        <svg width="240" height="250" id = "svg3"></svg>
+        <svg width="240" height="250" id = "svg4"></svg>
+        </div>
+        </div>
+        <div class = "column" >
+          <div class = "row">Mouse over states to view state-specific data
+          </div>
+          <br>
+          <div class = "row">
+          <div class = "buttons">
+            <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
+          <label for="male">Tweets</label><br>
+          <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
+          <label for="male">Retweets</label><br>
+          
+          <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
+          <label for="male">Likes</label><br>
+          <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
+          <label for="female">Tweet Sentiment</label><br>
+          <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'">
+          <label for="other">Popular Vote</label><br>
+          
+          <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
+          <label for="other">Tweet-vote Difference</label><br>
+          <input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
+          <label for="other">Retweet-vote Difference</label><br>
+    <input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
+          <label for="other">Like-vote Difference</label><br>
+          <input type="radio" id="sentiment_difference" name="map" value="sentiment_difference" onclick="location.href='sentiment_difference_map.html'" checked = "true">
+          <label for="other">Sentiment-vote Difference</label><br>
+          </div>
+          
+        </div>
+        <br>
+           <div class = "row">
+            <svg class = "scatterplot" width="500" height="500" id = "svg5"></svg>
+          </div>
+          <br>
+          <div class = "row">
+            <svg class = "static_pie" width="500" height="500" id = "svg6"></svg>
+          </div>
+          
+        </div>
+        
       </div>
-      <br>
-      <div class = "row">
-      <div class = "buttons">
-        <input type="radio" id="tweets" name="map" value="tweets" onclick="location.href='tweets_map.html'">
-      <label for="male">Tweets</label><br>
-      <input type="radio" id="retweets" name="map" value="retweets" onclick="location.href='retweet_map.html'"  >
-      <label for="male">Retweets</label><br>
-      
-      <input type="radio" id="likes" name="map" value="likes" onclick="location.href='like_map.html'">
-      <label for="male">Likes</label><br>
-      <input type="radio" id="sentiment" name="map" value="sentiment" onclick="location.href='sentiment_map.html'">
-      <label for="female">Tweet Sentiment</label><br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='pop_vote_map.html'" >
-      <label for="other">Popular Vote</label><br>
-      <input type="radio" id="pop_vote" name="map" value="pop_vote" onclick="location.href='error_map.html'" >
-      <label for="other">Tweet-vote Difference</label><br>
-      <input type="radio" id="retweet_difference" name="map" value="retweet_difference" onclick="location.href='retweet_difference_map.html'" >
-      <label for="other">Retweet-vote Difference</label><br>
-      <input type="radio" id="likes_difference" name="map" value="likes_difference" onclick="location.href='like_difference_map.html'" >
-      <label for="other">Like-vote Difference</label><br>
-      <input type="radio" id="sentiment_difference" name="map" value="sentiment_difference" onclick="location.href='sentiment_difference_map.html'" checked = "true">
-      <label for="other">Sentiment-vote Difference</label><br>
-      </div>
-      
-    </div>
-  </div>
-    
-  </div>
-  <div class = "row">
-
-    <svg width="500" height="500" id = "svg5"></svg>
-  </div>
 <script>
 
 var svg = d3.select("#svg");
@@ -98,6 +104,7 @@ var svg2 = d3.select("#svg2");
 var svg3 = d3.select("#svg3");
 var svg4 = d3.select("#svg4");
 var svg5 = d3.select("#svg5");
+var svg6 = d3.select("#svg6");
 var path = d3.geoPath();
 
 
@@ -190,7 +197,8 @@ let pop_vote = {};
 for (key in pop_vote){
     //console.log(key + " tweet: " + (likes[key]["percent"]-.5)*2);
     //console.log(key + " vote: " + (pop_vote[key]["D"][1] - pop_vote[key]["R"][1]));
-    error[key] = {"data": (((sentiment[key]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])), "color" : (((sentiment[key]-.5)*2) - (pop_vote[key]["D"][1] - pop_vote[key]["R"][1])+2)/4};
+    let difference = (Number(sentiment[key])- (Number(pop_vote[key]["D"][1])/(Number(pop_vote[key]["D"][1])+Number(pop_vote[key]["R"][1]))));
+    error[key] = {"data": difference, "color" : difference/2+.5};  
 }
 
 
@@ -215,13 +223,13 @@ d3.json("https://d3js.org/us-10m.v1.json", function(us) {
 			  	.text(function(d) {
                         //console.log(error[d.id]["data"]);
                         if (error[d.id]["data"] > 0){
-                            return fips_state2[d.id] +  " difference: " + Math.abs((error[d.id]["data"]*100)).toFixed(2) + "% Biden" ;
+                            return fips_state2[d.id] +  " difference: " + (error[d.id]["data"]*100).toFixed(2) + "% Biden" ;
                         }
                         else if (error[d.id]["data"] === 0){
-                            return fips_state2[d.id] +  " difference: " + Math.abs((error[d.id]["data"]*100)).toFixed(2) + "%";
+                            return fips_state2[d.id] +  " difference: " + (error[d.id]["data"]*100).toFixed(2) + "%";
                         }
                         else{
-                            return fips_state2[d.id] +  " difference: " + Math.abs((error[d.id]["data"]*100)).toFixed(2) + "% Trump ";
+                            return fips_state2[d.id] +  " difference: " + (error[d.id]["data"]*100).toFixed(2) + "% Trump ";
                    
                         }
 			   			
@@ -287,10 +295,16 @@ d3.json("https://d3js.org/us-10m.v1.json", function(us) {
     d3.selectAll("path")
 			.on("mouseover", function () {
       let id = this.id;
+      
       makePie(svg1, [vote_counts[id]["D"], vote_counts[id]["R"]], "Popular vote");
       makePie(svg2, [tweets[id]["D"], tweets[id]["R"]], "Tweets per party");
       makePie(svg3, [likes[id]["D"], likes[id]["R"]], "Likes per party");
       makePie(svg4, [retweets[id]["D"], retweets[id]["R"]], "Retweets per party");
+      svg6.append("circle").attr("cx",10).attr("cy",230).attr("r", 6).attr("class", "text").style("fill", "red")
+    svg6.append("circle").attr("cx",10).attr("cy",260).attr("r", 6).attr("class", "text").style("fill", "blue")
+    svg6.append("text").attr("x", 30).attr("y", 230).text("Trump").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+    svg6.append("text").attr("x", 30).attr("y", 260).text("Biden").attr("class", "text").style("font-size", "15px").attr("alignment-baseline","middle")
+
       })
       .on("mouseout", function(){
         d3.selectAll("g.arc").remove();
@@ -450,14 +464,15 @@ function ramp(color, n = 256) {
   return canvas;
 }
 legend({
-  color: d3.scaleDivergingSqrt([-2  , 0, 2], d3.interpolateRdBu),
-  title: "#Biden sentiment vs votes",
+  color: d3.scaleDivergingSqrt([-1, 0, 1], d3.interpolateRdBu),
+  title: "Sentiments err towards Trump <------------> Sentiments err towards Biden",
   tickFormat: "+%",
   height: 700,
   width: 350,
   marginTop: 660,
   marginLeft: 7,
   })
+
 </script>
 </body>
 </html>
