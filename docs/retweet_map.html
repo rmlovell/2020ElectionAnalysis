@@ -33,6 +33,10 @@
   font-weight: bold;
 }
 
+.left{
+  position: absolute;
+  left: 30px;
+}
   /* .buttons{
     position: absolute;
     top: 50px;
@@ -71,6 +75,10 @@
     <svg width="240" height="250" id = "svg3"></svg>
     <svg width="240" height="250" id = "svg4"></svg>
     </div>
+    <div class="row left"><h2>References:</h2></div><br><br>
+  <div class="row left"><a href=" https://www.kaggle.com/manchunhui/us-election-2020-tweets"><h3>Tweet data</h3></a></div><br><br>
+  <div class="row left"><a href="https://cookpolitical.com/2020-national-popular-vote-tracker"><h3>Popular vote data</h3></a></div>
+  <br>
     </div>
     <div class = "column" >
       <div class = "row">Mouse over states to view state-specific data
@@ -115,6 +123,7 @@
     </div>
     
   </div>
+  
   
 <script>
 
@@ -588,8 +597,8 @@ legend({
   })
 svg6.append("circle").attr("cx",10).attr("cy",7).attr("r", 6).style("fill", "red")
 svg6.append("circle").attr("cx",10).attr("cy",37).attr("r", 6).style("fill", "blue")
-svg6.append("text").attr("x", 30).attr("y", 7).text("Trump").style("font-size", "15px").attr("alignment-baseline","middle")
-svg6.append("text").attr("x", 30).attr("y", 37).text("Biden").style("font-size", "15px").attr("alignment-baseline","middle")
+svg6.append("text").attr("x", 30).attr("y", 7).text("#trump").style("font-size", "15px").attr("alignment-baseline","middle")
+svg6.append("text").attr("x", 30).attr("y", 37).text("#biden").style("font-size", "15px").attr("alignment-baseline","middle")
 
 </script>
 </body>
